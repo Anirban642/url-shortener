@@ -6,12 +6,17 @@ const urlRoutes = require('./routes/urlRoutes');
 
 const app = express();
 app.use(express.json());
-// Configure CORS to allow specific origin
+
+// ✅ Configure CORS to allow your frontend
 app.use(cors({
   origin: 'https://url-shortener-frontend-45ad.onrender.com',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
+
+// ✅ Explicitly handle preflight (OPTIONS)
+app.options('*', cors());
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
