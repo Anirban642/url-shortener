@@ -8,7 +8,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchUrls = async () => {
       try {
-        const response = await axios.get('https://url-shortener-backend.onrender.com/admin');
+        const response = await axios.get('http://localhost:5000/admin');
         setUrls(response.data);
       } catch (err) {
         setError('Error fetching data');

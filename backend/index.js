@@ -5,28 +5,17 @@ const cors = require('cors');
 const urlRoutes = require('./routes/urlRoutes');
 
 const app = express();
-app.use(express.json());
+app.use(express.json());  
+app.use(cors()); 
 
-// ✅ Configure CORS to allow your frontend
-app.use(cors({
-  origin: 'https://url-shortener-frontend-45ad.onrender.com',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
-
-// ✅ Explicitly handle preflight (OPTIONS)
-app.options('*', cors());
-
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Debug route mounting
-app.use('/api', urlRoutes);
-console.log('Mounted /api routes');
-app.use('/', urlRoutes);
-console.log('Mounted / routes');
+// Routes
+app.use('/api', urlRoutes); 
+app.use('/', urlRoutes);    
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
